@@ -43,14 +43,17 @@ The AI path is **provider-pluggable** via `.env`:
 SKILL.md                 # skill definition + 5-phase workflow
 references/               # ★ the methodology (the real value)
   design_patterns.md      #   8 laws + construction pattern library
+  industry_patterns.md    #   AI / 船舶智能化 / 智能座舱 playbooks
   background_styles.md    #   12 showcase backgrounds
   webgl_backgrounds.md    #   6 dynamic CSS/WebGL backgrounds
+  brand_guidelines.md     #   brand spec output (palette/clear-space/min-size)
 scripts/
   svg_to_png.py           # SVG -> PNG (cairosvg / resvg / playwright)
   generate_showcase.py    # AI showcase, pluggable provider
 assets/
   showcase_template.html  # single-image interactive stage
   background_library.html # all backgrounds, grid preview
+  brand_sheet_template.html # one-page brand spec sheet
 ```
 
 ## Credits

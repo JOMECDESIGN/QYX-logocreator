@@ -38,6 +38,9 @@ If the user already gave enough, skip straight to Phase 2.
 
 ### Phase 2 — Pattern Matching & SVG Generation
 1. Read `references/design_patterns.md` and pick **distinct construction patterns**.
+   If the brand is in a covered domain, also read `references/industry_patterns.md`
+   (AI / 船舶智能化 maritime intelligence / 智能座舱 smart cockpit) to bias the
+   pattern, motif, and color choices toward that industry.
 2. Generate **at least 6 variants** that differ across pattern type, density,
    symmetry, weight, and complexity — not 6 versions of one idea.
 3. Every SVG uses `viewBox="0 0 100 100"`, is centered around (50, 50), uses
@@ -63,8 +66,12 @@ spacing, rotation, stroke weight, dot radius, negative-space cut, color.
 
 ### Phase 5 — Delivery
 Package and hand off: editable **SVG**, production **PNG**, the **showcase images**,
-and (optionally) an interactive HTML showcase. Offer a short brand note
-(suggested colors, clear-space, min-size).
+and (optionally) an interactive HTML showcase.
+
+Then produce a **brand spec** following `references/brand_guidelines.md`: color
+palette (HEX/RGB + tints), clear space, minimum size, and usage do/don't. Deliver
+it inline, and if a shareable asset is wanted, populate `assets/brand_sheet_template.html`:
+`open "assets/brand_sheet_template.html?name=Brand&ink=%233B3BE6&logo=logo.svg"`.
 
 ## Key Design Principles (8 Laws)
 See `references/design_patterns.md` for full detail. In brief:

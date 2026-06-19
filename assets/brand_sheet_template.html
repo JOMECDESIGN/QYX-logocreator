@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand Sheet</title>
+<style>
+  :root { --ink: #3B3BE6; }
+  * { margin: 0; box-sizing: border-box; }
+  body { background: #e9e9ec; font-family: ui-sans-serif, system-ui, sans-serif; padding: 24px; color: #111; }
+  .sheet {
+    width: 960px; max-width: 100%; margin: auto; background: #fff; border-radius: 14px;
+    padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.08);
+  }
+  .full { grid-column: 1 / -1; }
+  h1 { font-size: 22px; letter-spacing: .02em; }
+  h1 small { font-weight: 400; opacity: .5; font-size: 13px; margin-left: 8px; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; opacity: .5; margin-bottom: 12px; }
+  .marks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mark { aspect-ratio: 1; display: grid; place-items: center; border-radius: 10px; }
+  .mark.dark { background: #0a0a0a; color: #fff; }
+  .mark.light { background: #f4f1ea; color: #0a0a0a; border: 1px solid #eee; }
+  .mark svg, .mark img { width: 46%; height: auto; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sw { width: 92px; }
+  .sw .chip { height: 56px; border-radius: 8px; border: 1px solid rgba(0,0,0,.08); }
+  .sw .lbl { font-size: 11px; margin-top: 6px; line-height: 1.4; }
+  .sw .lbl b { display: block; }
+  .clearspace { position: relative; aspect-ratio: 1.6; background: #f7f7f8; border-radius: 10px;
+    display: grid; place-items: center; }
+  .clearspace .box { position: relative; width: 46%; aspect-ratio: 1; }
+  .clearspace .box::before { content:""; position: absolute; inset: -25%; border: 1.5px dashed var(--ink); border-radius: 8px; }
+  .clearspace svg, .clearspace img { width: 100%; height: 100%; color: #111; }
+  .clearspace .cap { position: absolute; bottom: 8px; right: 12px; font-size: 11px; opacity: .55; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 7px 8px; border-bottom: 1px solid #f0f0f0; }
+  td:first-child { opacity: .6; width: 42%; }
+  .dd { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; font-size: 13px; }
+  .dd ul { list-style: none; padding: 0; } .dd li { padding: 4px 0 4px 18px; position: relative; }
+  .dd .do li::before { content:"✓"; position:absolute; left:0; color: #1a9a4b; }
+  .dd .dont li::before { content:"✕"; position:absolute; left:0; color: #c0392b; }
+  .minsizes { display: flex; gap: 18px; align-items: flex-end; }
+  .minsizes .ms { text-align: center; } .minsizes .ms .lbl { font-size: 11px; opacity: .6; margin-top: 6px; }
+  .minsizes svg, .minsizes img { color: #111; display: block; margin: auto; }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="full"><h1 id="name">Brand</h1></div>
+
+  <div>
+    <h2>Logo · on dark / on light</h2>
+    <div class="marks">
+      <div class="mark dark"  id="mDark"></div>
+      <div class="mark light" id="mLight"></div>
+    </div>
+  </div>
+
+  <div>
+    <h2>Color palette</h2>
+    <div class="swatches" id="swatches"></div>
+  </div>
+
+  <div>
+    <h2>Clear space</h2>
+    <div class="clearspace"><div class="box" id="csBox"></div><span class="cap">≥ 25% of width on all sides</span></div>
+  </div>
+
+  <div>
+    <h2>Minimum size</h2>
+    <div class="minsizes">
+      <div class="ms"><div id="ms48"></div><div class="lbl">48px</div></div>
+      <div class="ms"><div id="ms24"></div><div class="lbl">24px · digital min</div></div>
+      <div class="ms"><div id="ms16"></div><div class="lbl">16px · legibility test</div></div>
+    </div>
+    <table style="margin-top:14px"><tr><td>Digital min</td><td>24 px height</td></tr>
+      <tr><td>Print min</td><td>8 mm height</td></tr></table>
+  </div>
+
+  <div class="full">
+    <h2>Usage</h2>
+    <div class="dd">
+      <ul class="do"><li>Use the provided SVG; recolor only via the palette (single ink)</li>
+        <li>Keep the clear space on all sides</li>
+        <li>Match on-dark / on-light variant to the background</li></ul>
+      <ul class="dont"><li>No gradients, shadows, outlines, or a second hue</li>
+        <li>No stretching, rotating, or off-palette recoloring</li>
+        <li>No busy backgrounds, no sizes below the minimum</li></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const q = new URLSearchParams(location.search);
+const name = q.get("name") || "Brand";
+const ink  = q.get("ink")  || "#3B3BE6";
+document.getElementById("name").innerHTML = name + " <small>brand sheet</small>";
+document.documentElement.style.setProperty("--ink", ink);
+
+function tint(hex, a){ // hex -> rgba string
+  const h=hex.replace("#",""); const n=parseInt(h.length===3?h.replace(/./g,c=>c+c):h,16);
+  return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+}
+const palette = [
+  ["Primary ink", ink, "the mark · accents"],
+  ["On dark", "#FFFFFF", "mark on dark"],
+  ["On light", "#0A0A0A", "mark on light"],
+  ["Surface light", "#F4F1EA", "light backdrops"],
+  ["Surface dark", "#0A0A0A", "dark backdrops"],
+  ["Tint 35%", tint(ink,0.35), "support"],
+  ["Tint 12%", tint(ink,0.12), "support"],
+];
+document.getElementById("swatches").innerHTML = palette.map(([l,c,u])=>
+  `<div class="sw"><div class="chip" style="background:${c}"></div>
+   <div class="lbl"><b>${l}</b>${c}<br>${u}</div></div>`).join("");
+
+// inject the logo everywhere once loaded
+function place(markup){
+  document.getElementById("mDark").innerHTML = markup;
+  document.getElementById("mLight").innerHTML = markup;
+  document.getElementById("csBox").innerHTML = markup;
+  for (const [id,px] of [["ms48",48],["ms24",24],["ms16",16]]){
+    const w=document.createElement("div"); w.style.width=px+"px"; w.style.height=px+"px";
+    w.innerHTML=markup; document.getElementById(id).appendChild(w);
+  }
+}
+if (q.get("logo")) fetch(q.get("logo")).then(r=>r.text()).then(place).catch(()=>{});
+// drag-drop fallback
+addEventListener("dragover",e=>e.preventDefault());
+addEventListener("drop",e=>{e.preventDefault(); const f=e.dataTransfer.files[0]; if(!f)return;
+  const r=new FileReader(); r.onload=()=>place(r.result); r.readAsText(f);});
+</script>
+</body>
+</html>
