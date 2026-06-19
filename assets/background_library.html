@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Background Library</title>
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; color: #eee; font-family: ui-sans-serif, system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  p.sub { opacity: .6; font-size: 13px; margin-bottom: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 16px; }
+  .card { position: relative; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden;
+          cursor: pointer; border: 1px solid #1e1e1e; }
+  .card canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .meta { position: absolute; left: 10px; bottom: 8px; font-size: 12px; letter-spacing: .03em;
+          text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+  .meta b { font-weight: 600; }
+  .card.fs { position: fixed; inset: 0; z-index: 10; aspect-ratio: auto; border-radius: 0; }
+</style>
+</head>
+<body>
+<h1>Showcase Background Library</h1>
+<p class="sub">6 WebGL backgrounds · click to expand · move the mouse to interact. See references/webgl_backgrounds.md.</p>
+<div class="grid" id="grid"></div>
+
+<script>
+const SHADERS = {
+  void:  ["Deep Space","#fff",`vec3 col=vec3(0.0); float n=fract(sin(dot(p*900.,vec2(12.9898,78.233)))*43758.5453);
+          col+=step(0.997,n)*0.8; col+=exp(-length(p-M)*2.0)*0.06;`],
+  aurora:["Fluid Aurora","#fff",`float t=T*0.15; float a=sin(p.x*3.+t)+sin(p.y*4.-t);
+          vec3 col=mix(vec3(0.05,0.1,0.4),vec3(0.5,0.2,0.05),0.5+0.5*sin(a+M.x*3.));`],
+  mesh:  ["Gradient Mesh","#111",`float t=T*0.1;
+          vec3 col=mix(vec3(0.95,0.93,0.88),vec3(0.85,0.88,0.95),0.5+0.5*sin(p.x*2.+t));
+          col=mix(col,vec3(0.96,0.9,0.92),0.5+0.5*sin(p.y*2.-t));`],
+  iridescent:["Frosted Iridescence","#111",`float a=length(p-0.5)+M.x*0.2;
+          vec3 col=0.5+0.5*cos(6.28*(a*3.+vec3(0.,0.33,0.67))); col=mix(vec3(0.88),col,0.35);`],
+  swiss: ["Solid Field","#fff",`vec3 col=vec3(0.10,0.28,0.20);`],
+};
+SHADERS.matrix = ["LED Matrix","#7fe",`vec2 g=fract(p*24.)-0.5; vec2 id=floor(p*24.);
+  float ph=fract(sin(dot(id,vec2(7.,13.)))*99.+T*0.8);
+  float m=smoothstep(0.4,0.05,length(g-(M-0.5)*0.1));
+  float d=smoothstep(0.35,0.1,length(g))*(ph+m*0.5);
+  vec3 col=vec3(0.0,0.7,0.4)*d+vec3(0.0,0.04,0.04);`];
+
+function compile(gl,src,type){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+function mount(card, body){
+  const cv=card.querySelector("canvas"); const gl=cv.getContext("webgl"); if(!gl)return;
+  const fs=`precision highp float; uniform vec2 R; uniform float T; uniform vec2 M;
+    void main(){ vec2 p=gl_FragCoord.xy/R; ${body} gl_FragColor=vec4(col,1.0);}`;
+  const vs=`attribute vec2 a; void main(){gl_Position=vec4(a,0.,1.);}`;
+  const prog=gl.createProgram();
+  gl.attachShader(prog,compile(gl,vs,gl.VERTEX_SHADER));
+  gl.attachShader(prog,compile(gl,fs,gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const a=gl.getAttribLocation(prog,"a"); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+  const uR=gl.getUniformLocation(prog,"R"),uT=gl.getUniformLocation(prog,"T"),uM=gl.getUniformLocation(prog,"M");
+  let mouse=[0.5,0.5];
+  card.addEventListener("mousemove",e=>{const r=cv.getBoundingClientRect();mouse=[(e.clientX-r.left)/r.width,1-(e.clientY-r.top)/r.height];});
+  function resize(){const d=devicePixelRatio||1;cv.width=cv.clientWidth*d;cv.height=cv.clientHeight*d;gl.viewport(0,0,cv.width,cv.height);}
+  new ResizeObserver(resize).observe(cv); resize();
+  const t0=performance.now();
+  (function loop(){gl.uniform2f(uR,cv.width,cv.height);gl.uniform1f(uT,(performance.now()-t0)/1000);
+    gl.uniform2f(uM,mouse[0],mouse[1]);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(loop);})();
+}
+
+const grid=document.getElementById("grid");
+for(const [key,[label,ink,body]] of Object.entries(SHADERS)){
+  const card=document.createElement("div"); card.className="card";
+  card.innerHTML=`<canvas></canvas><div class="meta" style="color:${ink}"><b>${label}</b> · ${key}</div>`;
+  card.onclick=()=>card.classList.toggle("fs");
+  grid.appendChild(card); mount(card, body);
+}
+</script>
+</body>
+</html>

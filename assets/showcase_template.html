@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logo Showcase</title>
+<style>
+  :root { --ink: #fff; }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #000; font-family: ui-sans-serif, system-ui, sans-serif; }
+  /* 16:9 capture stage */
+  #stage {
+    position: relative; width: 100vw; height: 56.25vw; max-height: 100vh;
+    max-width: 177.78vh; margin: auto; overflow: hidden;
+  }
+  canvas#bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  #logo {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    color: var(--ink); pointer-events: none;
+  }
+  #logo svg, #logo img { width: 28%; height: auto; }
+  #caption {
+    position: absolute; left: 4%; bottom: 5%; color: var(--ink);
+    font-size: 1.1vw; letter-spacing: .04em; opacity: .85; line-height: 1.5;
+  }
+  #caption b { font-weight: 600; letter-spacing: .02em; }
+  #drop {
+    position: absolute; top: 4%; right: 4%; color: var(--ink); opacity: .5;
+    font-size: .9vw; border: 1px dashed currentColor; padding: .5em .8em; border-radius: 6px;
+    pointer-events: auto;
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg"></canvas>
+  <div id="logo"><!-- logo injected here --></div>
+  <div id="caption"><b id="cap-name">Brand</b><br><span id="cap-tag">design system</span></div>
+  <div id="drop">drop SVG / ?logo=…</div>
+</div>
+
+<script>
+// --- read params -----------------------------------------------------------
+const q = new URLSearchParams(location.search);
+const bg = q.get("bg") || "void";
+const name = q.get("name") || "Brand";
+const tag = q.get("tag") || "design system";
+document.getElementById("cap-name").textContent = name;
+document.getElementById("cap-tag").textContent = tag;
+
+const LIGHT = new Set(["editorial","iridescent","aura","clinical","ui","swiss","mesh"]);
+document.documentElement.style.setProperty("--ink", LIGHT.has(bg) ? "#000" : "#fff");
+
+// --- inject logo -----------------------------------------------------------
+const logoEl = document.getElementById("logo");
+function setLogo(markup){ logoEl.innerHTML = markup; }
+if (q.get("logo")) {
+  fetch(q.get("logo")).then(r => r.text()).then(setLogo).catch(()=>{});
+}
+const stage = document.getElementById("stage");
+stage.addEventListener("dragover", e => e.preventDefault());
+stage.addEventListener("drop", e => {
+  e.preventDefault();
+  const f = e.dataTransfer.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = () => setLogo(reader.result);
+  reader.readAsText(f);
+  document.getElementById("drop").style.display = "none";
+});
+
+// --- background shader -----------------------------------------------------
+// Self-contained WebGL backgrounds (see references/webgl_backgrounds.md).
+const SHADERS = {
+  void:  `vec3 col=vec3(0.0); float n=fract(sin(dot(p*900.,vec2(12.9898,78.233)))*43758.5453);
+          col+=step(0.997,n)*0.8; float g=exp(-length(p-0.5)*2.5)*0.06; col+=g;`,
+  aurora:`vec2 u=p; float t=T*0.15;
+          float a=sin(u.x*3.+t)+sin(u.y*4.-t); vec3 c1=vec3(0.05,0.1,0.4),c2=vec3(0.5,0.2,0.05);
+          vec3 col=mix(c1,c2,0.5+0.5*sin(a+M.x*3.));`,
+  mesh:  `vec2 u=p; float t=T*0.1;
+          vec3 col=mix(vec3(0.95,0.93,0.88),vec3(0.85,0.88,0.95),0.5+0.5*sin(u.x*2.+t));
+          col=mix(col,vec3(0.96,0.9,0.92),0.5+0.5*sin(u.y*2.-t));`,
+  matrix:`vec2 g=fract(p*24.)-0.5; vec2 id=floor(p*24.);
+          float ph=fract(sin(dot(id,vec2(7.,13.)))*99.+T*0.8);
+          float d=smoothstep(0.35,0.1,length(g))*ph; vec3 col=vec3(0.0,0.7,0.4)*d;
+          col+=vec3(0.0,0.05,0.05);`,
+  iridescent:`float a=length(p-0.5)+M.x*0.2; vec3 col=0.5+0.5*cos(6.28*(a*3.+vec3(0.,0.33,0.67)));
+          col=mix(vec3(0.88),col,0.35);`,
+  swiss: `vec3 col=vec3(0.10,0.28,0.20);`,
+};
+
+function compile(gl, src, type){ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); return s; }
+function run(name){
+  const cv=document.getElementById("bg");
+  const gl=cv.getContext("webgl");
+  if(!gl){ document.body.style.background = LIGHT.has(name)?"#f4f1ea":"#000"; return; }
+  const body=SHADERS[name]||SHADERS.void;
+  const fs=`precision highp float; uniform vec2 R; uniform float T; uniform vec2 M;
+    void main(){ vec2 p=gl_FragCoord.xy/R; ${body}
+      gl_FragColor=vec4(col,1.0); }`;
+  const vs=`attribute vec2 a; void main(){ gl_Position=vec4(a,0.,1.); }`;
+  const prog=gl.createProgram();
+  gl.attachShader(prog,compile(gl,vs,gl.VERTEX_SHADER));
+  gl.attachShader(prog,compile(gl,fs,gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog); gl.useProgram(prog);
+  const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  const a=gl.getAttribLocation(prog,"a"); gl.enableVertexAttribArray(a); gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);
+  const uR=gl.getUniformLocation(prog,"R"),uT=gl.getUniformLocation(prog,"T"),uM=gl.getUniformLocation(prog,"M");
+  let mouse=[0.5,0.5];
+  cv.addEventListener("mousemove",e=>{const r=cv.getBoundingClientRect(); mouse=[(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height];});
+  function resize(){ const d=devicePixelRatio||1; cv.width=cv.clientWidth*d; cv.height=cv.clientHeight*d; gl.viewport(0,0,cv.width,cv.height); }
+  addEventListener("resize",resize); resize();
+  const t0=performance.now();
+  (function loop(){ gl.uniform2f(uR,cv.width,cv.height); gl.uniform1f(uT,(performance.now()-t0)/1000);
+    gl.uniform2f(uM,mouse[0],mouse[1]); gl.drawArrays(gl.TRIANGLES,0,3); requestAnimationFrame(loop); })();
+}
+run(bg);
+</script>
+</body>
+</html>
