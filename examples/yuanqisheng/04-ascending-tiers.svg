@@ -1,0 +1,9 @@
+<!-- 04 升维之阶: chevron tiers rising from a base origin dot, growing bolder toward the apex. 层层递进 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+     fill="none" stroke="currentColor"
+     stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="50" cy="78" r="4.5" fill="currentColor" stroke="none"/>
+  <path d="M36 66 L50 57 L64 66" stroke-width="2.8" opacity="0.4"/>
+  <path d="M33 51 L50 41 L67 51" stroke-width="3.2" opacity="0.68"/>
+  <path d="M30 35 L50 23 L70 35" stroke-width="3.7" opacity="1"/>
+</svg>

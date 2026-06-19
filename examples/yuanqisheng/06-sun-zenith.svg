@@ -1,0 +1,10 @@
+<!-- 06 晟·日升: a sun rising over the horizon with an origin core and an ascending ray. 晟 / 如日中天 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+     fill="none" stroke="currentColor" stroke-width="3.2"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 64 H78" opacity="0.4"/>
+  <path d="M30 64 A20 20 0 0 1 70 64"/>
+  <path d="M50 48 V30"/>
+  <circle cx="50" cy="27" r="2.6" fill="currentColor" stroke="none"/>
+  <circle cx="50" cy="64" r="4" fill="currentColor" stroke="none"/>
+</svg>

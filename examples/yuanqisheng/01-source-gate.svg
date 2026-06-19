@@ -1,0 +1,9 @@
+<!-- 01 源点·启门: origin dot inside a ring that opens upward, a light beam ascending through the gap. 元(源点) + 启(开启) + 升维 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
+     fill="none" stroke="currentColor" stroke-width="3.2"
+     stroke-linecap="round" stroke-linejoin="round">
+  <path d="M62 28 A26 26 0 1 1 38 28"/>
+  <path d="M50 55 L50 18"/>
+  <circle cx="50" cy="15" r="3" fill="currentColor" stroke="none"/>
+  <circle cx="50" cy="55" r="4.5" fill="currentColor" stroke="none"/>
+</svg>
