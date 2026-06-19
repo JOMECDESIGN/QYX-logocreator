@@ -3,9 +3,9 @@
      stroke-linecap="round" stroke-linejoin="round">
     <path d="M40 26 A30 30 0 0 0 40 74" stroke="currentColor"/>
     <path d="M60 26 A30 30 0 0 1 60 74" stroke="currentColor"/>
-    <circle cx="50" cy="62" r="3.2" fill="currentColor" stroke="none"/>
-    <path d="M41 58 L50 52 L59 58" stroke="currentColor" stroke-width="2.6" opacity="0.38"/>
-    <path d="M39 49 L50 41 L61 49" stroke="currentColor" stroke-width="3.0" opacity="0.66"/>
-    <path d="M37 39 L50 30 L63 39" stroke="currentColor" stroke-width="3.7"/>
-    <circle cx="50" cy="22" r="2.6" fill="currentColor" stroke="none"/>
+    <circle cx="50" cy="21" r="2.8" fill="currentColor" stroke="none"/>
+    <path d="M37 38 L50 30 L63 38" stroke="currentColor" stroke-width="3.7"/>
+    <path d="M40 49 L50 42 L60 49" stroke="currentColor" stroke-width="3.3" opacity="0.6"/>
+    <path d="M43 60 L50 54 L57 60" stroke="currentColor" stroke-width="3.0" opacity="0.4"/>
+    <circle cx="50" cy="73" r="5.4" fill="currentColor" stroke="none"/>
 </svg>
