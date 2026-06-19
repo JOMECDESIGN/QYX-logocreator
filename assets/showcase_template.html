@@ -42,14 +42,13 @@
 <script>
 // --- read params -----------------------------------------------------------
 const q = new URLSearchParams(location.search);
-const bg = q.get("bg") || "void";
+const bgParam = q.get("bg") || "void";
 const name = q.get("name") || "Brand";
 const tag = q.get("tag") || "design system";
 document.getElementById("cap-name").textContent = name;
 document.getElementById("cap-tag").textContent = tag;
 
-const LIGHT = new Set(["editorial","iridescent","aura","clinical","ui","swiss","mesh"]);
-document.documentElement.style.setProperty("--ink", LIGHT.has(bg) ? "#000" : "#fff");
+// bg is resolved to a shader key after SHADERS is defined (see bottom of script).
 
 // --- inject logo -----------------------------------------------------------
 const logoEl = document.getElementById("logo");
@@ -115,6 +114,16 @@ function run(name){
   (function loop(){ gl.uniform2f(uR,cv.width,cv.height); gl.uniform1f(uT,(performance.now()-t0)/1000);
     gl.uniform2f(uM,mouse[0],mouse[1]); gl.drawArrays(gl.TRIANGLES,0,3); requestAnimationFrame(loop); })();
 }
+// The CSS path renders 6 shaders; the AI path names 12 styles. Map the 12
+// background_styles.md keys onto the closest shader (see webgl_backgrounds.md),
+// and pick the ink from the resolved shader's luminance so it stays legible.
+const ALIAS = {
+  frosted:"mesh", fluid:"aurora", spotlight:"void", analog:"aurora",
+  editorial:"mesh", aura:"mesh", clinical:"mesh", ui:"mesh",
+};
+const bg = SHADERS[bgParam] ? bgParam : (ALIAS[bgParam] || "void");
+const LIGHT_SHADERS = new Set(["mesh","iridescent"]);
+document.documentElement.style.setProperty("--ink", LIGHT_SHADERS.has(bg) ? "#000" : "#fff");
 run(bg);
 </script>
 </body>
