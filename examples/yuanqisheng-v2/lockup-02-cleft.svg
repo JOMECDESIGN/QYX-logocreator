@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 256">
+  <defs><linearGradient id="cyd" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="100">
+   <stop offset="0" stop-color="#1FA9CC"/><stop offset="1" stop-color="#2BD6F0"/></linearGradient>
+  <linearGradient id="bgd" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#07182E"/><stop offset="1" stop-color="#040D1A"/></linearGradient>
+  <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+   <stop offset="0" stop-color="#FFE7B0"/><stop offset="0.5" stop-color="#E8B45A"/><stop offset="1" stop-color="#C8861E"/></linearGradient></defs>
+  <rect width="240" height="256" fill="url(#bgd)"/>
+  <g transform="translate(70,18)"><circle cx="50" cy="52" r="34" fill="url(#cyd)"/><rect x="47.5" y="20" width="5" height="48" rx="2.5" fill="#08182E"/><polygon points="50,7 52,14 50,21 48,14" fill="#FFC23A"/><polygon points="44,14 50,15.8 56,14 50,12.2" fill="#FFC23A"/></g>
+  <g text-anchor="middle" fill="url(#wg)">
+    <g transform="translate(120,211) scale(1.1,0.74)"><text x="0" y="0" font-size="44" font-weight="bold" letter-spacing="5" font-family="WenQuanYi Zen Hei, sans-serif">元启晟</text></g>
+    <text x="120" y="234" font-size="10.5" font-weight="bold" letter-spacing="6" font-family="Arial, sans-serif">YUAN QI SHENG</text>
+  </g>
+  <rect x="70" y="246" width="100" height="2" rx="1" fill="#FF9E2E" opacity="0.6"/>
+</svg>
