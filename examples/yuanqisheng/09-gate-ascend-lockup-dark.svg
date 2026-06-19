@@ -1,21 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 256">
-  <defs><linearGradient id="bgd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0C1338"/><stop offset="1" stop-color="#070420"/></linearGradient><linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#2A5AD0"/><stop offset="0.55" stop-color="#3E7BE6"/><stop offset="1" stop-color="#5A96EC"/></linearGradient>
-    <linearGradient id="sun" gradientUnits="userSpaceOnUse" x1="0" y1="78" x2="0" y2="14">
-      <stop offset="0" stop-color="#F4C53C"/><stop offset="0.32" stop-color="#FF9A2E"/>
-      <stop offset="0.64" stop-color="#FF5E1A"/><stop offset="1" stop-color="#D6286B"/></linearGradient><linearGradient id="wgold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE9A8"/><stop offset="0.5" stop-color="#E0B65A"/><stop offset="1" stop-color="#C08A2A"/></linearGradient></defs>
+  <defs><linearGradient id="bgd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07182E"/><stop offset="1" stop-color="#040D1A"/></linearGradient><linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#21487E"/><stop offset="0.55" stop-color="#3068A8"/><stop offset="1" stop-color="#3E72B8"/></linearGradient>
+    <linearGradient id="ax" gradientUnits="userSpaceOnUse" x1="0" y1="78" x2="0" y2="14">
+      <stop offset="0" stop-color="#C8761A"/><stop offset="0.5" stop-color="#FF9E2E"/><stop offset="1" stop-color="#FFE0A0"/></linearGradient><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7B0"/><stop offset="0.5" stop-color="#E8B45A"/><stop offset="1" stop-color="#C8861E"/></linearGradient></defs>
   <rect width="240" height="256" fill="url(#bgd)"/>
   <g transform="translate(48.5,18) scale(1.42)" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
     <path d="M40 26 A30 30 0 0 0 40 74" stroke="url(#arc)" stroke-dasharray="24.3 7"/>
     <path d="M60 26 A30 30 0 0 1 60 74" stroke="url(#arc)" stroke-dasharray="24.3 7"/>
-    <circle cx="50" cy="20" r="6" fill="url(#sun)" stroke="none"/>
-    <path d="M37 39 L50 31 L63 39" stroke="url(#sun)" stroke-width="3.7"/>
-    <path d="M40 50 L50 43 L60 50" stroke="url(#sun)" stroke-width="3.3"/>
-    <path d="M43 61 L50 55 L57 61" stroke="url(#sun)" stroke-width="3.0"/>
-    <circle cx="50" cy="74" r="3" fill="url(#sun)" stroke="none"/></g>
-  <g text-anchor="middle" fill="url(#wgold)">
+    <circle cx="50" cy="20" r="6" fill="url(#ax)" stroke="none"/>
+    <path d="M37 39 L50 31 L63 39" stroke="url(#ax)" stroke-width="3.7"/>
+    <path d="M40 50 L50 43 L60 50" stroke="url(#ax)" stroke-width="3.3"/>
+    <path d="M43 61 L50 55 L57 61" stroke="url(#ax)" stroke-width="3.0"/>
+    <circle cx="50" cy="74" r="3" fill="url(#ax)" stroke="none"/></g>
+  <g text-anchor="middle" fill="url(#wg)">
     <g transform="translate(120,211) scale(1.1,0.74)"><text x="0" y="0" font-size="44" font-weight="bold" letter-spacing="5" font-family="WenQuanYi Zen Hei, sans-serif">元启晟</text></g>
     <text x="120" y="234" font-size="10.5" font-weight="bold" letter-spacing="6" font-family="Arial, sans-serif">YUAN QI SHENG</text>
   </g>
-  <rect x="70" y="246" width="100" height="2" rx="1" fill="#3E7BE6" opacity="0.7"/>
+  <rect x="70" y="246" width="100" height="2" rx="1" fill="#FF9E2E" opacity="0.65"/>
 </svg>
