@@ -1,27 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0A2247"/><stop offset="1" stop-color="#061327"/></linearGradient>
-    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#1E4E86" stop-opacity="0.5"/><stop offset="1" stop-color="#1E4E86" stop-opacity="0"/></radialGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#9C6A0E"/><stop offset="0.5" stop-color="#F8E098"/><stop offset="1" stop-color="#C8902A"/></linearGradient>
-    <linearGradient id="blue" x1="1" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#0E3878"/><stop offset="0.5" stop-color="#5FB6F6"/><stop offset="1" stop-color="#1B5FB0"/></linearGradient>
-    <linearGradient id="tier" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0" stop-color="#C8902A"/><stop offset="1" stop-color="#FFF6DC"/></linearGradient>
-    <radialGradient id="topglow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#FFFFFF"/><stop offset="0.55" stop-color="#FFE9AE"/><stop offset="1" stop-color="#E0962E" stop-opacity="0"/></radialGradient>
+      <stop offset="0" stop-color="#0C1338"/><stop offset="1" stop-color="#070420"/></linearGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3461E0"/><stop offset="0.55" stop-color="#5B4DE0"/><stop offset="1" stop-color="#8A45D8"/></linearGradient>
+    <!-- sunrise gradient along the central axis (bottom warm -> top bright) -->
+    <linearGradient id="sun" gradientUnits="userSpaceOnUse" x1="0" y1="78" x2="0" y2="14">
+      <stop offset="0" stop-color="#D6286B"/><stop offset="0.38" stop-color="#FF6A1A"/>
+      <stop offset="0.72" stop-color="#FFC42B"/><stop offset="1" stop-color="#FFF4D2"/></linearGradient>
   </defs>
   <rect width="120" height="120" fill="url(#bg)"/>
-  <ellipse cx="60" cy="60" rx="56" ry="56" fill="url(#halo)"/>
   <g transform="translate(10,10)" fill="none" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M40 26 A30 30 0 0 0 40 74" stroke="url(#gold)" stroke-dasharray="24.3 7"/>
-    <path d="M60 26 A30 30 0 0 1 60 74" stroke="url(#blue)" stroke-dasharray="24.3 7"/>
-    <circle cx="50" cy="20" r="11" fill="url(#topglow)" stroke="none"/><circle cx="50" cy="20" r="4.6" fill="#FFFFFF" stroke="none"/>
-    <path d="M37 39 L50 31 L63 39" stroke="url(#tier)" stroke-width="3.7"/>
-    <path d="M40 50 L50 43 L60 50" stroke="url(#tier)" stroke-width="3.3" opacity="0.7"/>
-    <path d="M43 61 L50 55 L57 61" stroke="url(#tier)" stroke-width="3.0" opacity="0.46"/>
-    <circle cx="50" cy="74" r="3" fill="url(#tier)" stroke="none"/>
+    <path d="M40 26 A30 30 0 0 0 40 74" stroke="url(#arc)" stroke-dasharray="24.3 7"/>
+    <path d="M60 26 A30 30 0 0 1 60 74" stroke="url(#arc)" stroke-dasharray="24.3 7"/>
+    <circle cx="50" cy="20" r="6" fill="url(#sun)" stroke="none"/>
+    <path d="M37 39 L50 31 L63 39" stroke="url(#sun)" stroke-width="3.7"/>
+    <path d="M40 50 L50 43 L60 50" stroke="url(#sun)" stroke-width="3.3"/>
+    <path d="M43 61 L50 55 L57 61" stroke="url(#sun)" stroke-width="3.0"/>
+    <circle cx="50" cy="74" r="3" fill="url(#sun)" stroke="none"/>
   </g>
 </svg>
